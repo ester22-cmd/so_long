@@ -6,7 +6,7 @@
 /*   By: estferna <estferna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 21:44:27 by estferna          #+#    #+#             */
-/*   Updated: 2024/12/15 22:17:46 by estferna         ###   ########.fr       */
+/*   Updated: 2024/12/22 19:18:47 by estferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,24 @@ struct s_game
 	mlx_texture_t	*portion_texture;
 	mlx_image_t		*portionimage;
 	char			**map;
+	int				is_finish;
+	size_t			count_collection;
+	int				count_steps;
 };
+
+void	init_textures(t_game *game);
+int		init_images(t_game *game);
+void	put_grass_fence(t_game *game);
+void	put_image(t_game *game, mlx_image_t *image, int x, int y);
+void	put_portion_home(t_game *game);
+void	put_catimage(t_game *game);
+
+void	init_game(t_game *game);
+void	listen_moves(mlx_key_data_t keydata, void *param);
+void	ft_hook(void *param);
+void	free_array(char **map);
+void	finish_game(t_game *game);
+
+void	ft_error(void);
 
 #endif
