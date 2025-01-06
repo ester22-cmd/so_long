@@ -6,7 +6,7 @@
 /*   By: estferna <estferna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 21:40:34 by estferna          #+#    #+#             */
-/*   Updated: 2024/12/22 19:21:52 by estferna         ###   ########.fr       */
+/*   Updated: 2025/01/04 19:20:26 by estferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	move_cat(t_game *game, int x, int y)
 	if (game->map[y_map][x_map] == 'C')
 		collect_portion(game, x, y);
 	if (game->map[y_map][x_map] == 'E' && game->is_finish)
-		exit(0);
+		finish_game(game);
 	game->catimage->instances[0].x = x;
 	game->catimage->instances[0].y = y;
 }

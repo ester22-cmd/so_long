@@ -6,7 +6,7 @@
 #    By: estferna <estferna@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/19 16:31:52 by estferna          #+#    #+#              #
-#    Updated: 2024/12/09 21:28:51 by estferna         ###   ########.fr        #
+#    Updated: 2025/01/04 17:24:16 by estferna         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,7 @@ clean:
 
 fclean:    clean
 	${RM} ${NAME}
-
+	
 re: fclean all
 
 .PHONY: all clean fclean re

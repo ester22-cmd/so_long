@@ -6,7 +6,7 @@
 /*   By: estferna <estferna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 21:44:27 by estferna          #+#    #+#             */
-/*   Updated: 2024/12/22 19:18:47 by estferna         ###   ########.fr       */
+/*   Updated: 2025/01/04 19:29:53 by estferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ struct s_game
 	int				is_finish;
 	size_t			count_collection;
 	int				count_steps;
+	int				window_width;
+	int				window_height;
 };
 
 void	init_textures(t_game *game);
@@ -53,7 +55,8 @@ void	listen_moves(mlx_key_data_t keydata, void *param);
 void	ft_hook(void *param);
 void	free_array(char **map);
 void	finish_game(t_game *game);
-
+char	**init_map(char *path);
+void	validation(t_game *game);
 void	ft_error(void);
 
 #endif

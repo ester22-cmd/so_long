@@ -6,11 +6,25 @@
 /*   By: estferna <estferna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 21:21:26 by estferna          #+#    #+#             */
-/*   Updated: 2024/12/22 19:24:42 by estferna         ###   ########.fr       */
+/*   Updated: 2025/01/05 18:59:03 by estferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+
+int	array_len(char **map)
+{
+	int	i;
+
+	if (!map)
+		return(0);
+	i = 0;
+	while (map[i])
+	{
+		i++;
+	}
+	return(i);
+}
 
 void	free_array(char **map)
 {
@@ -68,16 +82,37 @@ void	finish_game(t_game *game)
 	mlx_terminate(game->mlx);
 	exit(0);
 }
-int32_t	main(void)
+
+int	is_valid_extension(char *file, char *extension)
+{
+	int	file_size;
+	int	extension_size;
+
+	file_size = ft_strlen(file);
+	extension_size = ft_strlen(extension);
+	while(extension_size >= 0)
+	{
+		if(extension[extension_size] != file[file_size])
+			return(1);
+		file_size--;
+		extension_size--;
+	}
+	return(0);
+}
+
+int32_t	main(int argc, char **argv)
 {
 	t_game	game;
-	
-	game.map = ft_split(
-		"1111111\n"
-		"10C0C11\n"
-		"10110E1\n"
-		"10101P1\n"
-		"1111111", '\n');
+
+	if(argc != 2)
+		ft_error();
+	(void)argv;
+	if(is_valid_extension(argv[1], ".ber"))
+		ft_error();
+	game.map = init_map(argv[1]);
+	game.window_width = ft_strlen(game.map[0]);
+	game.window_height = array_len(game.map);
+	validation(&game);
 	init_game(&game);
 	finish_game(&game);
 	return (EXIT_SUCCESS);

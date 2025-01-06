@@ -6,7 +6,7 @@
 /*   By: estferna <estferna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 21:12:09 by estferna          #+#    #+#             */
-/*   Updated: 2024/12/20 23:59:08 by estferna         ###   ########.fr       */
+/*   Updated: 2024/12/22 22:51:20 by estferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 void	init_game(t_game *game)
 {
-	game->mlx = mlx_init(7 * 64, 5 * 64, "cat", true);
+	game->mlx = mlx_init((game->window_width - 1) * 64,
+			game->window_height * 64, "cat", true);
 	if (!game->mlx)
 		ft_error();
 	init_images(game);
