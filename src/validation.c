@@ -6,7 +6,7 @@
 /*   By: estferna <estferna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 19:28:33 by estferna          #+#    #+#             */
-/*   Updated: 2025/01/05 21:46:45 by estferna         ###   ########.fr       */
+/*   Updated: 2025/01/06 21:16:28 by estferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,6 @@ int	count_char(char *str, char c)
 	return (count);
 }
 
-// void	is_valid_rectangle()
 void	is_valid_min_characters(char **map)
 {
 	int	l;
@@ -118,6 +117,34 @@ void	is_valid_min_characters(char **map)
 		ft_error();
 	}
 }
+int	count_line(char *line)
+{
+	int	i;
+
+	i = 0;
+	while (line[i] && ft_strchr("10PEC", line[i]))
+	{
+		i++;
+	}
+	return (i);
+}
+void	is_valid_rectangle(char **map)
+{
+	int	size;
+	int	i;
+
+	size = count_line(map[0]);
+	i = 1;
+	while (map[i])
+	{
+		if (size != count_line(map[i]))
+		{
+			free_array(map);
+			ft_error();
+		}
+		i++;
+	}
+}
 
 
 void	validation(t_game *game)
@@ -125,4 +152,5 @@ void	validation(t_game *game)
 	(void)game;
 	is_valid_characters(game->map);
 	is_valid_min_characters(game->map);
+	is_valid_rectangle(game->map);
 }
