@@ -6,7 +6,7 @@
 /*   By: estferna <estferna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 21:44:27 by estferna          #+#    #+#             */
-/*   Updated: 2025/01/04 19:29:53 by estferna         ###   ########.fr       */
+/*   Updated: 2025/01/09 19:31:59 by estferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,18 @@ void	free_array(char **map);
 void	finish_game(t_game *game);
 char	**init_map(char *path);
 void	validation(t_game *game);
+int		is_valid_extension(char *file, char *extension);
+void	is_valid_min_characters(char **map);
+void	is_valid_characters(char **map);
+void	is_valid_rectangle(char **map);
+int		count_char(char *str, char c);
+int		count_line(char *line);
+void	is_valid_path(char **map);
+void	is_valid_walls(char **map);
+void	flood_fill(char **map, int l, int c);
+void	is_valid_flood(char **map);
 void	ft_error(void);
+void	ft_error_validation(char *str);
+int		array_len(char **map);
 
 #endif

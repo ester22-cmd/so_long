@@ -6,7 +6,7 @@
 #    By: estferna <estferna@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/04 21:18:56 by estferna          #+#    #+#              #
-#    Updated: 2024/12/22 20:07:29 by estferna         ###   ########.fr        #
+#    Updated: 2025/01/09 19:37:51 by estferna         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ LIBFT	:= ./lib/libft
 FLAGSMLX = -ldl -lglfw -pthread -lm
 HEADERS	:= -I ./include -I $(LIBMLX)/include -I./src/so_long.h 
 LIBS	:= $(LIBMLX)/build/libmlx42.a $(LIBFT)/libft.a
-SRCS	:= ./src/main.c ./src/initimages.c ./src/initgame.c ./src/moves.c ./src/validation.c
+SRCS	:= ./src/main.c ./src/initimages.c ./src/initgame.c ./src/moves.c ./src/validation.c ./src/validation_utils.c ./src/validation_utils2.c ./src/utils.c
 
 OBJS	:= ${SRCS:.c=.o}
 

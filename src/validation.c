@@ -6,146 +6,94 @@
 /*   By: estferna <estferna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 19:28:33 by estferna          #+#    #+#             */
-/*   Updated: 2025/01/06 21:16:28 by estferna         ###   ########.fr       */
+/*   Updated: 2025/01/09 19:33:37 by estferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-
-char	**init_map(char *path)
-{
-	int		fd;
-	int		count;
-	char	*line;
-	char	**map;
-	int		i;
-
-	fd = open(path, O_RDONLY);
-	if (fd == -1)
-		ft_error();
-	count = 0;
-	line = get_next_line(fd);
-	if (!line)
-		ft_error();
-	while (line)
-	{
-		count++;
-		free(line);
-		line = get_next_line(fd);
-	}
-	close(fd);
-	map = malloc(sizeof(char *) * (count + 1));
-	if (!map)
-		ft_error();
-	map[count] = NULL;
-	fd = open(path, O_RDONLY);
-	if (fd == -1)
-		ft_error();
-	i = 0;
-	while (i < count)
-	{
-
-		map[i] = get_next_line(fd);
-		i++;
-	}
-	close(fd);
-	return (map);
-}
-
-void	is_valid_characters(char **map)
+void	is_valid_walls(char **map)
 {
 	int	l;
 	int	c;
-	
+
 	l = 0;
-	while(map[l])
+	while (map[l])
 	{
 		c = 0;
-		while(map[l][c])
+		while (map[l][c] && ft_strchr("10CEP", map[l][c]))
 		{
-			if(ft_strchr("01CEP\n", map[l][c]) == 0)
+			if ((l == 0 && map[l][c] != '1')
+				|| (map[l + 1] == NULL && map[l][c] != '1')
+				|| (map[l][0] != '1')
+				|| (ft_strchr("10CEP", map[l][c + 1]) == NULL
+				&& map[l][c] != '1'))
 			{
 				free_array(map);
-				ft_error();
+				ft_error_validation("Error\nnot surrounded by walls");
 			}
-			
 			c++;
 		}
 		l++;
 	}
 }
 
-int	count_char(char *str, char c)
+void	flood_fill(char **map, int l, int c)
 {
-	int	count;
-	int	i;
-
-	count = 0;
-	i = 0;
-	while (str[i])
+	if (map[l][c] != '1')
 	{
-		if (str[i] == c)
-			count++;
-		i++;
+		map[l][c] = '1';
+		flood_fill(map, l + 1, c);
+		flood_fill(map, l - 1, c);
+		flood_fill(map, l, c + 1);
+		flood_fill(map, l, c - 1);
 	}
-	return (count);
 }
 
-void	is_valid_min_characters(char **map)
+void	is_valid_flood(char **map)
 {
 	int	l;
-	int	p_occ;
-	int	c_occ;
-	int	e_occ;
-	
+	int	c;
+
 	l = 0;
-	p_occ = 0;
-	c_occ = 0;
-	e_occ = 0;
 	while (map[l])
 	{
-		p_occ += count_char(map[l], 'P');
-		c_occ += count_char(map[l], 'C');
-		e_occ += count_char(map[l], 'E');
+		c = 0;
+		while (map[l][c])
+		{
+			if (ft_strchr("CEP", map[l][c]))
+			{
+				free_array(map);
+				ft_error_validation("Error\nnot a valid path");
+			}
+			c++;
+		}
 		l++;
 	}
-	printf("Player: %d\nColetável: %d\nSaida: %d\n", p_occ, c_occ, e_occ);
-	if (p_occ != 1 || e_occ != 1 || c_occ < 1)
-	{
-		free_array(map);
-		ft_error();
-	}
 }
-int	count_line(char *line)
-{
-	int	i;
 
-	i = 0;
-	while (line[i] && ft_strchr("10PEC", line[i]))
-	{
-		i++;
-	}
-	return (i);
-}
-void	is_valid_rectangle(char **map)
+void	is_valid_path(char **map)
 {
-	int	size;
-	int	i;
+	int	l;
+	int	c;
 
-	size = count_line(map[0]);
-	i = 1;
-	while (map[i])
+	l = 0;
+	while (map[l])
 	{
-		if (size != count_line(map[i]))
+		c = 0;
+		while (map[l][c])
 		{
-			free_array(map);
-			ft_error();
+			if (map[l][c] == 'P')
+			{
+				flood_fill(map, l, c);
+				break ;
+			}
+			c++;
 		}
-		i++;
+		l++;
 	}
+	is_valid_flood(map);
 }
-
 
 void	validation(t_game *game)
 {
@@ -153,4 +101,7 @@ void	validation(t_game *game)
 	is_valid_characters(game->map);
 	is_valid_min_characters(game->map);
 	is_valid_rectangle(game->map);
+	is_valid_walls(game->map);
+	is_valid_path(game->map);
+	free_array(game->map);
 }
